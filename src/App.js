@@ -44,8 +44,13 @@ const App = () => {
 
   return (
     <>
-      <NavBar movies={movies} setMovies={setMovies} reset={resetMovies} />
-      <div>{movieList}</div>
+      <header>
+        <NavBar movies={movies} setMovies={setMovies} reset={resetMovies} />
+      </header>
+      <section className="mainArticles">
+        <article className="cards">{movieList}</article>
+        <p style={{ background: "red", height: "1300px" }}></p>
+      </section>
     </>
   );
 };

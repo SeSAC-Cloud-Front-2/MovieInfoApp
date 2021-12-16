@@ -15,8 +15,7 @@ const SortingButton = ({ id, movies, setMovies, reset, text }) => {
         //popular
         setMovies(nextMovies.sort((a, b) => (a.rate > b.rate ? -1 : 1)));
       } else if (id === "2") {
-        //new
-
+        //new=
         setMovies(nextMovies.sort((a, b) => (a.date > b.date ? -1 : 1)));
       } else if (id === "3") {
         //genre

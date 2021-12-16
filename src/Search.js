@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Search.css";
 
 const Search = ({ movies, setMovies, reset }) => {
   const [value, setValue] = useState("");
@@ -15,7 +16,13 @@ const Search = ({ movies, setMovies, reset }) => {
   };
   return (
     <>
-      <input type="text" value={value} onChange={handleChange} />
+      <input
+        className="searchBar"
+        type="text"
+        value={value}
+        onChange={handleChange}
+        placeholder="영화 제목을 입력해주세요"
+      />
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "./Search";
 import SortingButton from "./SortingButton";
+import "./NavBar.css";
 
 const NavBar = ({ movies, setMovies, reset }) => {
   const filters = [
@@ -34,11 +35,14 @@ const NavBar = ({ movies, setMovies, reset }) => {
   ));
 
   return (
-    <div>
-      <ul>
-        {filterList}
-        <Search movies={movies} setMovies={setMovies} reset={reset} />
-      </ul>
+    <div className="navBar">
+      <ul>{filterList}</ul>
+      <Search
+        className="searchBar"
+        movies={movies}
+        setMovies={setMovies}
+        reset={reset}
+      />
     </div>
   );
 };
