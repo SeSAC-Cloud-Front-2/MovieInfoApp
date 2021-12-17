@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import './button.css';
+import './TopButton.css';
+import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
-const Button=()=> {
+const TopButton=()=> {
 
   const [ScrollY, setScrollY] = useState(0);
   const [BtnStatus, setBtnStatus] = useState(false); // 버튼 상태
@@ -43,8 +44,8 @@ const Button=()=> {
       <button 
         className={BtnStatus ? "topBtn active" : "topBtn"} // 버튼 노출 여부
         onClick={goTop}  // 버튼 클릭시 함수 호출
-      ><i class="fas fa-arrow-circle-up"></i></button>
+      ><FaRegArrowAltCircleUp/></button>
   );
 }
 
-export default Button;
+export default TopButton;
