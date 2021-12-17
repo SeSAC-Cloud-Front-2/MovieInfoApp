@@ -9,9 +9,6 @@ const MovieCardImg = styled.div`
 
 function GridCards({ posterpath, id, originaltitle }) {
     return (
-        // 한컬럼에 24size 6*4 xs: 한컬럼이 모든 사이즈를 차지하게
-        // <Col lg={6} md={8} xs={24}>
-        // <div style={{ position: 'relative' }}>
         <div>
             <a className="id" href={`/movie/${id}`}>
                 <img
@@ -19,7 +16,6 @@ function GridCards({ posterpath, id, originaltitle }) {
                     style={{
                         width: '90%',
                         height: '320px',
-                        // margin: '10px 10px',
                     }}
                     src={posterpath}
                     alt={originaltitle}

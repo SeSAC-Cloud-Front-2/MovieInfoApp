@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Search from "../Search";
+<<<<<<< HEAD
 import { API_KEY } from "./api";
+=======
+>>>>>>> 30c3b5b710d096de3afaeddb1f9dd08a1d87e43f
 const HeaderBlock = styled.div`
   z-index: 2;
   width: 100%;
