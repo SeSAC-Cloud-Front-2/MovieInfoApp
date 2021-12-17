@@ -36,8 +36,7 @@ function Header({ movieCall }) {
         genre: '',
     });
     let { home, popular, latest, genre } = state;
-    let vari = {}
-    const response = `https://api.themoviedb.org/${vari}?api_key=${API_KEY}&language=en-US&page=1`;
+    // const response = `https://api.themoviedb.org/${vari}?api_key=${API_KEY}&language=en-US&page=1`;
     return (
         <HeaderBlock>
             <H2>
