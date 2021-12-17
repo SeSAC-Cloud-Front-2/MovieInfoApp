@@ -4,6 +4,7 @@ import MainImage from "./MainImage";
 import GridCards from "./GridCards";
 import styled from "styled-components";
 import Header from "./Header";
+import TopButton from "./TopButton";
 
 const MainPageBlock = styled.div`
   width: 100%;
@@ -66,7 +67,7 @@ function MainPage() {
 
   // 최초 브라우저 redering되었을 때 실행
   useEffect(() => {
-    const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+    const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=`;
     movieCall(response);
   }, []);
 
@@ -83,13 +84,9 @@ function MainPage() {
         setPage(response.page);
       });
   };
+
   useEffect(() => {
     setMoviesCopy(movies.concat());
-    filterFlags.forEach((f, i) => {
-      if (f) {
-        filter(i);
-      }
-    });
   }, [movies]);
 
   const onClick = () => {
@@ -102,27 +99,30 @@ function MainPage() {
     movieCall(response);
   };
 
-  const filter = useCallback((id) => {
-    const nextMovies = moviesCopy.concat();
-    if (id === "0") {
-      //home
-      reset();
-    } else if (id === "1") {
-      //popular
-      setMoviesCopy(
-        nextMovies.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
-      );
-    } else if (id === "2") {
-      //new=
-      setMoviesCopy(
-        nextMovies.sort((a, b) =>
-          new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
-        )
-      );
-    } else if (id === "3") {
-      //genre
-    }
-  });
+  const filter = useCallback(
+    (id) => {
+      const nextMovies = moviesCopy.concat();
+      if (id === "0") {
+        //home
+        reset();
+      } else if (id === "1") {
+        //popular
+        setMoviesCopy(
+          nextMovies.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
+        );
+      } else if (id === "2") {
+        //new=
+        setMoviesCopy(
+          nextMovies.sort((a, b) =>
+            new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
+          )
+        );
+      } else if (id === "3") {
+        //genre
+      }
+    },
+    [moviesCopy]
+  );
 
   const reset = () => {
     setMoviesCopy(movies.concat());
@@ -131,6 +131,7 @@ function MainPage() {
   return (
     <MainPageBlock>
       <Header
+        filterFlags={filterFlags}
         setFilterFlags={setFilterFlags}
         filter={filter}
         movies={movies}
@@ -174,6 +175,7 @@ function MainPage() {
       <ButtonBlock>
         <Button onClick={onClick}>더보기</Button>
       </ButtonBlock>
+      <TopButton></TopButton>
     </MainPageBlock>
   );
 }
