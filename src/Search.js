@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Search.css";
 
-const Search = ({ movies, setMovies, reset }) => {
+const Search = ({ movies, setMoviesCopy, reset }) => {
   const [value, setValue] = useState("");
   const handleChange = (e) => {
     const text = e.target.value;
     setValue(text);
+  };
 
-    if (text.trim() == "") {
+  useEffect(() => {
+    const queryText = value.toLowerCase().replaceAll(" ", "");
+    if (queryText.trim() == "") {
       reset();
       return;
     }
-
-    setMovies(movies.concat().filter((movie) => movie.name.includes(text)));
-  };
+    setMoviesCopy(
+      movies
+        .concat()
+        .filter((movie) =>
+          movie.title.toLowerCase().replaceAll(" ", "").includes(queryText)
+        )
+    );
+  }, [value]);
   return (
     <>
       <input
@@ -21,7 +29,7 @@ const Search = ({ movies, setMovies, reset }) => {
         type="text"
         value={value}
         onChange={handleChange}
-        placeholder="영화 제목을 입력해주세요"
+        placeholder="제목을 입력해주세요"
       />
     </>
   );
