@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Search.css";
 
-const Search = ({ movies, moviesCopy, setMoviesCopy, reset }) => {
+const Search = ({ movies, setMoviesCopy, reset }) => {
   const [value, setValue] = useState("");
   const handleChange = (e) => {
     const text = e.target.value;
