@@ -106,7 +106,6 @@ function MainPage() {
                 {/* 추후 여기에 장르를 넣기 */}
                 <h2 className="genre">최신 영화 입니다</h2>
                 {/* Movie Grid Cards */}
-                {/* <Row gutter={[16, 16]}> */}
                 <MovieCardBody>
                     {movies &&
                         movies.map((movie, index) => (
@@ -123,7 +122,6 @@ function MainPage() {
                             </div>
                         ))}
                 </MovieCardBody>
-                {/* </Row> */}
             </MovieCardBlock>
             {/* TODO : 버튼 위치 조정 */}
             <ButtonBlock>
