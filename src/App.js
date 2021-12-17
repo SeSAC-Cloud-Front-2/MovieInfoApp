@@ -3,15 +3,17 @@ import "./App.css";
 import MainPage from "./components/MainPage";
 import NavBar from "./NavBar";
 
+const GlobalStyle = createGlobalStyle`
+    body {
+        background: #141414;
+    }
+`;
+
 const App = () => {
   return (
     <>
-      <header></header>
-      <section className="mainArticles">
-        <article className="cards">
-          <MainPage></MainPage>
-        </article>
-      </section>
+        <GlobalStyle />
+        <MainPage />
     </>
   );
 };
