@@ -12,21 +12,30 @@ const MainPageBlock = styled.div`
 `;
 
 const MovieCardBlock = styled.div`
-  width: 90%;
-  margin: 1rem auto;
-
-  .genre {
-    color: white;
-  }
+    width: 90%;
+    /* height: ; */
+    margin: 1rem auto;
+    .text {
+        color: white;
+    }
+    box-sizing: border-box;
 `;
 
 const MovieCardBody = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
-  width: 90%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    width: 90%;
+    box-sizing: border-box;
+    /* 이미지가 div영역 밖으로 나가는거 방지 */
+    overflow: auto;
+    /* overflow의 스크롤바 없애고 기능은 살림*/
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const ButtonBlock = styled.div`
