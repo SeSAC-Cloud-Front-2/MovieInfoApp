@@ -5,7 +5,6 @@ import GridCards from './GridCards';
 import styled from 'styled-components';
 import Header from './Header';
 import TopButton from './TopButton';
-import axios from 'axios';
 
 const MainPageBlock = styled.div`
     width: 100%;
@@ -230,7 +229,7 @@ function MainPage() {
                         )}
                 </MovieCardBody>
             </MovieCardBlock>
-            {page < 200 ? (
+            {page < moviesCopy.length + 1 ? (
                 <ButtonBlock>
                     <Button onClick={onClick}>더보기</Button>
                 </ButtonBlock>
