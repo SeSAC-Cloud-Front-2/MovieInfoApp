@@ -96,20 +96,6 @@ function MainPage() {
     setMainMovieImage(movieList[0]);
   };
 
-  const movieCall = (response) => {
-    fetch(response)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        // 메인Image가 초기에는 null
-        setMainMovieImage(mainMovieImage || response.results[0]);
-        // 기존 배열 얕은 복사 후 movies에 세팅
-        setMovies([...movies, ...response.results]);
-        // 페이지 셋팅
-        setPage(response.page);
-      });
-  };
-
   useEffect(() => {
     setMoviesCopy(movies.concat());
   }, [movies]);
@@ -176,7 +162,6 @@ function MainPage() {
       <MovieCardBlock>
         <h2 className="text">{`${name[number]}영화`}</h2>
         {/* 추후 여기에 장르를 넣기 */}
-        <h2 className="genre">최신 영화 입니다</h2>
         {/* Movie Grid Cards */}
         {/* <Row gutter={[16, 16]}> */}
         <MovieCardBody>
