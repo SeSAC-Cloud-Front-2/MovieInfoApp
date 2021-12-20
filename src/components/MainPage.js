@@ -104,7 +104,7 @@ function MainPage() {
   };
 
   const filter = useCallback(
-    (id, genre) => {
+    (id) => {
       const nextMovies = movies.concat();
       setPage(20); // 최대 표시값 초기화
       if (id === "0") {
@@ -122,10 +122,10 @@ function MainPage() {
             new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
           )
         );
-      } else if (id === "3") {
-        //genre
+      } else {
+        const genreNo = parseInt(id);
         setMoviesCopy(
-          nextMovies.filter((movie) => movie.genre_ids.includes(27))
+          nextMovies.filter((movie) => movie.genre_ids.includes(genreNo))
         );
       }
     },
