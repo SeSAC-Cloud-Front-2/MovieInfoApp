@@ -33,7 +33,36 @@ const NavBlock = styled.ul`
         font-size: 18px;
         font-weight: 500;
         text-align: center;
+        line-height: 60px;
     }
+`;
+
+const DropDown = styled.li`
+  display: relative;
+
+  :hover {
+    div {
+      display: block;
+    }
+  }
+`;
+
+const DropDownContent = styled.div`
+  display: none;
+  position: absolute;
+  top: 55px;
+  width: auto;
+  border: 1px solid red;
+  ul {
+    width: inherit;
+    padding: 0;
+  }
+  li {
+    display: block;
+    width: inherit;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 function Header({
@@ -73,9 +102,18 @@ function Header({
                 <li id="2" onClick={handleClick}>
                     최신
                 </li>
-                <li id="3" onClick={handleClick}>
+                <DropDown>
                     장르
-                </li>
+                    <DropDownContent>
+                        <ul>
+                          <li id="">Action</li>
+                          <li id="">Adventure</li>
+                          <li id="">Animation</li>
+                          <li id="">Comedy</li>
+                          <li id="">Crime</li>
+                        </ul>
+                    </DropDownContent>
+                </DropDown>
             </NavBlock>
             <Search
                 movies={movies}
