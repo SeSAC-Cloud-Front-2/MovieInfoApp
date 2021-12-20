@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { useMemo, useState } from 'react';
 import './App.css';
 import MainPage from './components/MainPage';
 
@@ -9,13 +8,18 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
+// 새로고침 시 scrollTop
+window.onbeforeunload = function () {
+    window.scrollTo({ top: 0 });
+};
+
 const App = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <MainPage />
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <MainPage />
+        </>
+    );
 };
 
 export default App;
