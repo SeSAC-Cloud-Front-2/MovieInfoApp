@@ -72,15 +72,28 @@ function MainPage() {
   const [mainMovieImage, setMainMovieImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(20);
   const [number, setNumber] = useState(0);
   const name = ['인기', '인기', '최신', '장르'];
 
   // 최초 브라우저 redering되었을 때 실행
   useEffect(() => {
     const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=`;
-    movieCall(response);
+    callMovie(response);
   }, []);
+  
+  const callMovie = async (response) => {
+    let movieList = [];
+    for (let i = 1; i < 11; i++) {
+      movieList = movieList.concat(
+        await fetch(response + i)
+          .then((response) => response.json())
+          .then((response) => response.results)
+      );
+    }
+    console.log(movieList);
+    setMovies(movieList.concat());
+  };
 
   const movieCall = (response) => {
     fetch(response)
@@ -101,13 +114,7 @@ function MainPage() {
   }, [movies]);
 
   const onClick = () => {
-    // 페이지 1추가하여 api 쿼리 생성
-    const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${
-      page + 1
-    }`;
-
-    // movieCall 호출
-    movieCall(response);
+    setPage(page + 20);
   };
 
   const filter = useCallback(
@@ -173,19 +180,23 @@ function MainPage() {
         {/* <Row gutter={[16, 16]}> */}
         <MovieCardBody>
           {moviesCopy &&
-            moviesCopy.map((movie, index) => (
-              <div key={index}>
-                <GridCards
-                  posterpath={
-                    movie.poster_path
-                      ? `${IMAGE_URL}w500${movie.poster_path}`
-                      : null
-                  }
-                  id={movie.id}
-                  originaltitle={movie.original_title}
-                />
-              </div>
-            ))}
+            moviesCopy.map((movie, index) =>
+              index < page ? (
+                <div key={index}>
+                  <GridCards
+                    posterpath={
+                      movie.poster_path
+                        ? `${IMAGE_URL}w500${movie.poster_path}`
+                        : null
+                    }
+                    id={movie.id}
+                    originaltitle={movie.original_title}
+                  />
+                </div>
+              ) : (
+                ""
+              )
+            )}
         </MovieCardBody>
         {/* </Row> */}
       </MovieCardBlock>
