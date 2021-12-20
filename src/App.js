@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
-import "./App.css";
-import MainPage from "./components/MainPage";
+import { createGlobalStyle } from 'styled-components';
+import { useMemo, useState } from 'react';
+import './App.css';
+import MainPage from './components/MainPage';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -11,8 +12,8 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   return (
     <>
-        <GlobalStyle />
-        <MainPage />
+      <GlobalStyle />
+      <MainPage />
     </>
   );
 };
