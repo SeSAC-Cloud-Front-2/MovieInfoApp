@@ -37,8 +37,6 @@ const NavBlock = styled.ul`
 `;
 
 function Header({
-    setNumber,
-    nameChange,
     setFilterFlags,
     filter,
     movies,
@@ -48,7 +46,6 @@ function Header({
     const handleClick = e => {
         const id = e.target.id;
         // 문구 변경을 위한 flag
-        setNumber(id);
         nameChange(id);
 
         const newFilter = new Array(4);
