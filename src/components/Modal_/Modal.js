@@ -3,7 +3,7 @@ import "./Modal.scss";
 import Icons from "./Icons";
 
 import { AiFillStar } from "react-icons/ai";
-export default function Modal({ movie, modalPosterImg, closeModal }) {
+export default function Modal({ movie, modalPosterImg, handleModal }) {
   return (
     //화면 blur 처리할 overlay
     <div className="modal_overlay" id="modal">
@@ -14,7 +14,7 @@ export default function Modal({ movie, modalPosterImg, closeModal }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* closeBtn*/}
-        <button className="close_btn" id="closeBtn" onClick={closeModal}>
+        <button className="close_btn" id="closeBtn" onClick={handleModal}>
           X
         </button>
         {/* 영화 포스터 */}

@@ -12,17 +12,14 @@ const MovieCardImg = styled.div`
 function GridCards({ posterpath, movie, modalPosterPath }) {
   //modal on/off
   const [openModal, setOpenModal] = useState(false);
-  const showModal = () => {
-    setOpenModal(!openModal);
-  };
-  const closeModal = () => {
+  const handleModal = () => {
     setOpenModal(!openModal);
   };
   //
   return (
     <div>
       {/* a tag -> div tag */}
-      <div className="id" href={`/movie/${movie.id}`} onClick={showModal}>
+      <div className="id" onClick={handleModal}>
         <img
           className="image"
           style={{
@@ -36,7 +33,7 @@ function GridCards({ posterpath, movie, modalPosterPath }) {
           <Modal
             movie={movie}
             modalPosterImg={modalPosterPath}
-            closeModal={closeModal}
+            handleModal={handleModal}
           />
         )}
       </div>
