@@ -64,6 +64,8 @@ function MainPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
+  const [number, setNumber] = useState(0);
+  const name = ['인기', '인기', '최신', '장르'];
 
   // 최초 브라우저 redering되었을 때 실행
   useEffect(() => {
@@ -127,10 +129,16 @@ function MainPage() {
   const reset = () => {
     setMoviesCopy(movies.concat());
   };
+  
+  // header 컨텐츠 클릭에 따른 id value setting
+    const nameChange = number => {
+        setNumber(number);
+    };
 
   return (
     <MainPageBlock>
       <Header
+        nameChange={nameChange}
         filterFlags={filterFlags}
         setFilterFlags={setFilterFlags}
         filter={filter}
@@ -149,6 +157,7 @@ function MainPage() {
         />
       )}
       <MovieCardBlock>
+        <h2 className="text">{`${name[number]}영화`}</h2>
         {/* 추후 여기에 장르를 넣기 */}
         <h2 className="genre">최신 영화 입니다</h2>
         {/* Movie Grid Cards */}
