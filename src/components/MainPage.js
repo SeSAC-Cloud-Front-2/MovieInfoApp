@@ -93,6 +93,7 @@ function MainPage() {
     }
     console.log(movieList);
     setMovies(movieList.concat());
+    setMainMovieImage(movieList[0]);
   };
 
   const movieCall = (response) => {
