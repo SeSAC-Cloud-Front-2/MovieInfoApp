@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import "./App.css";
 import MainPage from "./components/MainPage";
-import NavBar from "./NavBar";
 
 const GlobalStyle = createGlobalStyle`
     body {
