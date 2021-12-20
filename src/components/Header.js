@@ -38,36 +38,36 @@ const NavBlock = styled.ul`
 `;
 
 const DropDown = styled.li`
-  display: relative;
+    display: relative;
 
-  :hover {
-    div {
-      display: block;
+    :hover {
+        div {
+            display: block;
+        }
     }
-  }
 `;
 
 const DropDownContent = styled.div`
-  display: none;
-  position: absolute;
-  top: 55px;
-  width: auto;
-  /* border: 1px solid red; */
-  background-color: #5c5c5c;
-  ul {
-    width: inherit;
-    padding: 0;
-  }
-  li {
-    display: block;
-    width: inherit;
-    margin: 0;
-    padding: 0;
-  }
-  ul > li:hover {
-  background: #212529;
-  transition: ease 0.5s;
-  }
+    display: none;
+    position: absolute;
+    top: 55px;
+    width: auto;
+    /* border: 1px solid red; */
+    background-color: #5c5c5c;
+    ul {
+        width: inherit;
+        padding: 0;
+    }
+    li {
+        display: block;
+        width: inherit;
+        margin: 0;
+        padding: 0;
+    }
+    ul > li:hover {
+        background: #212529;
+        transition: ease 0.5s;
+    }
 `;
 
 function Header({
@@ -80,7 +80,8 @@ function Header({
 }) {
     const handleClick = e => {
         const id = e.target.id;
-        // 문구 변경을 위한 flag
+
+        // text flag 역할
         nameChange(id);
 
         const newFilter = new Array(4);
@@ -91,17 +92,41 @@ function Header({
         setFilterFlags(newFilter);
         filter(id);
 
+        // 문구 변경을 위한 flag
+
         // 스크린의 가장 위로
         window.scrollTo(0, 0);
     };
-    
-    const handleDropDownClick = (e) => {
+
+    const handleDropDownClick = e => {
         const id = e.target.id;
         filter(id);
 
         // 스크린의 가장 위로
         window.scrollTo(0, 0);
-      };
+
+        // text flag 역할
+        switch (id) {
+            case '28':
+                nameChange(3);
+                break;
+            case '12':
+                nameChange(4);
+                break;
+            case '16':
+                nameChange(5);
+                break;
+            case '35':
+                nameChange(6);
+                break;
+            case '80':
+                nameChange(7);
+                break;
+            default:
+                nameChange(id);
+                break;
+        }
+    };
 
     return (
         <HeaderBlock>
@@ -119,21 +144,26 @@ function Header({
                     장르
                     <DropDownContent>
                         <ul>
-                          <li id="28" onClick={handleDropDownClick}>
-                            Action
-                          </li>
-                          <li id="12" onClick={handleDropDownClick}>
-                            Adventure
-                          </li>
-                          <li id="16" onClick={handleDropDownClick}>
-                            Animation
-                          </li>
-                          <li id="35" onClick={handleDropDownClick}>
-                            Comedy
-                          </li>
-                          <li id="80" onClick={handleDropDownClick}>
-                            Crime
-                          </li>
+                            <li id="28" onClick={handleDropDownClick}>
+                                {/* Action */}
+                                액션영화
+                            </li>
+                            <li id="12" onClick={handleDropDownClick}>
+                                {/* Adventure */}
+                                모험영화
+                            </li>
+                            <li id="16" onClick={handleDropDownClick}>
+                                {/* Animation */}
+                                애니메이션영화
+                            </li>
+                            <li id="35" onClick={handleDropDownClick}>
+                                {/* Comedy */}
+                                코미디영화
+                            </li>
+                            <li id="80" onClick={handleDropDownClick}>
+                                {/* Crime */}
+                                범죄영화
+                            </li>
                         </ul>
                     </DropDownContent>
                 </DropDown>
