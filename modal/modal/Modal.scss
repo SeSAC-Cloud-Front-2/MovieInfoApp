@@ -31,18 +31,17 @@
     height: $modal-height;
     background-color: #141414;
     color: $common-color;
-    padding: 12px;
+    padding: 10px 22px;
     z-index: 1000;
     border-radius: 4px;
     @include boxShadow();
     .close_btn {
       position: absolute;
-      font-size: 32px;
-      font-weight: bold;
-      top: 15px;
-      right: 20px;
-
+      font-size: 20px;
+      top: 13px;
+      right: 10px;
       color: $title-color;
+      font-weight: bold;
     }
     .poster_img {
       grid-row: 1 / 5;
