@@ -52,7 +52,8 @@ const DropDownContent = styled.div`
   position: absolute;
   top: 55px;
   width: auto;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  background-color: #5c5c5c;
   ul {
     width: inherit;
     padding: 0;
@@ -62,6 +63,10 @@ const DropDownContent = styled.div`
     width: inherit;
     margin: 0;
     padding: 0;
+  }
+  ul > li:hover {
+  background: #212529;
+  transition: ease 0.5s;
   }
 `;
 
