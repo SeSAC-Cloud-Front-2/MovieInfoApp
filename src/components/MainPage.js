@@ -106,6 +106,7 @@ function MainPage() {
 
   const filter = useCallback(
     (id) => {
+      setPage(20);    // 최대 표시값 초기화
       const nextMovies = moviesCopy.concat();
       if (id === "0") {
         //home
