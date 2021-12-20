@@ -4,7 +4,6 @@ import MainImage from "./MainImage";
 import GridCards from "./GridCards";
 import styled from "styled-components";
 import Header from "./Header";
-import TopButton from "./TopButton";
 
 const MainPageBlock = styled.div`
   width: 100%;
@@ -12,30 +11,20 @@ const MainPageBlock = styled.div`
 `;
 
 const MovieCardBlock = styled.div`
-    width: 90%;
-    /* height: ; */
-    margin: 1rem auto;
-    .text {
-        color: white;
-    }
-    box-sizing: border-box;
+  width: 90%;
+  margin: 1rem auto;
+  .genre {
+    color: white;
+  }
 `;
 
 const MovieCardBody = styled.div`
-    height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0 auto;
-    width: 90%;
-    box-sizing: border-box;
-    /* 이미지가 div영역 밖으로 나가는거 방지 */
-    overflow: auto;
-    /* overflow의 스크롤바 없애고 기능은 살림*/
-    -ms-overflow-style: none;
-    ::-webkit-scrollbar {
-        display: none;
-    }
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90%;
 `;
 
 const ButtonBlock = styled.div`
@@ -72,78 +61,75 @@ function MainPage() {
   const [mainMovieImage, setMainMovieImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(20);
-  const [number, setNumber] = useState(0);
-  const name = ['인기', '인기', '최신', '장르'];
+  const [page, setPage] = useState(0);
 
   // 최초 브라우저 redering되었을 때 실행
   useEffect(() => {
-    const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=`;
-    callMovie(response);
+    const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+    movieCall(response);
   }, []);
-  
-  const callMovie = async (response) => {
-    let movieList = [];
-    for (let i = 1; i < 11; i++) {
-      movieList = movieList.concat(
-        await fetch(response + i)
-          .then((response) => response.json())
-          .then((response) => response.results)
-      );
-    }
-    console.log(movieList);
-    setMovies(movieList.concat());
-    setMainMovieImage(movieList[0]);
-  };
 
+  const movieCall = (response) => {
+    fetch(response)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        // 메인Image가 초기에는 null
+        setMainMovieImage(mainMovieImage || response.results[0]);
+        // 기존 배열 얕은 복사 후 movies에 세팅
+        setMovies([...movies, ...response.results]);
+        // 페이지 셋팅
+        setPage(response.page);
+      });
+  };
   useEffect(() => {
     setMoviesCopy(movies.concat());
+    filterFlags.forEach((f, i) => {
+      if (f) {
+        filter(i);
+      }
+    });
   }, [movies]);
 
   const onClick = () => {
-    setPage(page + 20);
+    // 페이지 1추가하여 api 쿼리 생성
+    const response = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${
+      page + 1
+    }`;
+
+    // movieCall 호출
+    movieCall(response);
   };
 
-  const filter = useCallback(
-    (id) => {
-      setPage(20);    // 최대 표시값 초기화
-      const nextMovies = moviesCopy.concat();
-      if (id === "0") {
-        //home
-        reset();
-      } else if (id === "1") {
-        //popular
-        setMoviesCopy(
-          nextMovies.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
-        );
-      } else if (id === "2") {
-        //new=
-        setMoviesCopy(
-          nextMovies.sort((a, b) =>
-            new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
-          )
-        );
-      } else if (id === "3") {
-        //genre
-      }
-    },
-    [moviesCopy]
-  );
+  const filter = useCallback((id) => {
+    const nextMovies = moviesCopy.concat();
+    if (id === "0") {
+      //home
+      reset();
+    } else if (id === "1") {
+      //popular
+      setMoviesCopy(
+        nextMovies.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
+      );
+    } else if (id === "2") {
+      //new=
+      setMoviesCopy(
+        nextMovies.sort((a, b) =>
+          new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
+        )
+      );
+    } else if (id === "3") {
+      //genre
+    }
+  });
 
   const reset = () => {
     setMoviesCopy(movies.concat());
   };
-  
-  // header 컨텐츠 클릭에 따른 id value setting
-    const nameChange = number => {
-        setNumber(number);
-    };
 
   return (
     <MainPageBlock>
       <Header
-        nameChange={nameChange}
-        filterFlags={filterFlags}
         setFilterFlags={setFilterFlags}
         filter={filter}
         movies={movies}
@@ -161,37 +147,42 @@ function MainPage() {
         />
       )}
       <MovieCardBlock>
-        <h2 className="text">{`${name[number]}영화`}</h2>
         {/* 추후 여기에 장르를 넣기 */}
+        <h2 className="genre">최신 영화 입니다</h2>
         {/* Movie Grid Cards */}
         {/* <Row gutter={[16, 16]}> */}
         <MovieCardBody>
           {moviesCopy &&
-            moviesCopy.map((movie, index) =>
-              index < page ? (
-                <div key={index}>
-                  <GridCards
-                    posterpath={
-                      movie.poster_path
-                        ? `${IMAGE_URL}w500${movie.poster_path}`
-                        : null
-                    }
-                    id={movie.id}
-                    originaltitle={movie.original_title}
-                  />
-                </div>
-              ) : (
-                ""
-              )
-            )}
+            moviesCopy.map((movie, index) => (
+              <div key={index}>
+                <GridCards
+                  posterpath={
+                    movie.poster_path
+                      ? `${IMAGE_URL}w500${movie.poster_path}`
+                      : null
+                  }
+                  //id={movie.id}
+                  //originaltitle={movie.original_title}
+
+                  //modal에 movie 전달
+                  movie={movie}
+                  modalPosterPath={
+                    movie.poster_path
+                      ? `${IMAGE_URL}original${movie.poster_path}`
+                      : null
+                  }
+                  //
+                />
+              </div>
+            ))}
         </MovieCardBody>
+
         {/* </Row> */}
       </MovieCardBlock>
       {/* TODO : 버튼 위치 조정 */}
       <ButtonBlock>
         <Button onClick={onClick}>더보기</Button>
       </ButtonBlock>
-      <TopButton></TopButton>
     </MainPageBlock>
   );
 }
