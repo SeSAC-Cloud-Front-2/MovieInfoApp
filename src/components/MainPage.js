@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { API_URL, API_KEY, IMAGE_URL } from "./api";
-import MainImage from "./MainImage";
-import GridCards from "./GridCards";
-import styled from "styled-components";
-import Header from "./Header";
-import TopButton from "./TopButton";
+import React, { useCallback, useEffect, useState } from 'react';
+import { API_URL, API_KEY, IMAGE_URL } from './api';
+import MainImage from './MainImage';
+import GridCards from './GridCards';
+import styled from 'styled-components';
+import Header from './Header';
+import TopButton from './TopButton';
 
 const MainPageBlock = styled.div`
   width: 100%;
@@ -74,7 +74,7 @@ function MainPage() {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(20);
   const [number, setNumber] = useState(0);
-  const name = ["인기", "인기", "최신", "장르"];
+  const name = ['인기', '인기', '최신', '장르'];
 
   // 최초 브라우저 redering되었을 때 실행
   useEffect(() => {
@@ -82,13 +82,13 @@ function MainPage() {
     callMovie(response);
   }, []);
 
-  const callMovie = async (response) => {
+  const callMovie = async response => {
     let movieList = [];
     for (let i = 1; i < 11; i++) {
       movieList = movieList.concat(
         await fetch(response + i)
-          .then((response) => response.json())
-          .then((response) => response.results)
+          .then(response => response.json())
+          .then(response => response.results)
       );
     }
     setMovies(movieList.concat());
@@ -104,18 +104,18 @@ function MainPage() {
   };
 
   const filter = useCallback(
-    (id) => {
+    id => {
       const nextMovies = movies.concat();
       setPage(20); // 최대 표시값 초기화
-      if (id === "0") {
+      if (id === '0') {
         //home
         reset();
-      } else if (id === "1") {
+      } else if (id === '1') {
         //popular
         setMoviesCopy(
           nextMovies.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
         );
-      } else if (id === "2") {
+      } else if (id === '2') {
         //new
         setMoviesCopy(
           nextMovies.sort((a, b) =>
@@ -125,7 +125,7 @@ function MainPage() {
       } else {
         const genreNo = parseInt(id);
         setMoviesCopy(
-          nextMovies.filter((movie) => movie.genre_ids.includes(genreNo))
+          nextMovies.filter(movie => movie.genre_ids.includes(genreNo))
         );
       }
     },
@@ -137,7 +137,7 @@ function MainPage() {
   };
 
   // header 컨텐츠 클릭에 따른 id value setting
-  const nameChange = (number) => {
+  const nameChange = number => {
     setNumber(number);
   };
 
@@ -164,25 +164,24 @@ function MainPage() {
       )}
       <MovieCardBlock>
         <h2 className="text">{`${name[number]}영화`}</h2>
-        {/* 추후 여기에 장르를 넣기 */}
         {/* Movie Grid Cards */}
-        {/* <Row gutter={[16, 16]}> */}
         <MovieCardBody>
           {moviesCopy &&
             moviesCopy.map((movie, index) =>
               index < page ? (
                 <div key={index}>
                   <GridCards
-                    posterpath={
+                    posterPath={
                       movie.poster_path
                         ? `${IMAGE_URL}w500${movie.poster_path}`
                         : null
                     }
-                    id={movie.id}
-                    originaltitle={movie.original_title}
-                    releaseDate={movie.release_date}
-                    overView={movie.overview}
-                    voteAverage={movie.vote_average}
+                    // id={movie.id}
+                    // originaltitle={movie.original_title}
+                    // releaseDate={movie.release_date}
+                    // overView={movie.overview}
+                    // voteAverage={movie.vote_average}
+                    movie={movie}
                     modalPosterPath={
                       movie.poster_path
                         ? `${IMAGE_URL}original${movie.poster_path}`
@@ -191,11 +190,10 @@ function MainPage() {
                   />
                 </div>
               ) : (
-                ""
+                ''
               )
             )}
         </MovieCardBody>
-        {/* </Row> */}
       </MovieCardBlock>
       {/* TODO : 버튼 위치 조정 */}
       {page < 200 ? (
@@ -203,7 +201,7 @@ function MainPage() {
           <Button onClick={onClick}>더보기</Button>
         </ButtonBlock>
       ) : (
-        ""
+        ''
       )}
       <TopButton></TopButton>
     </MainPageBlock>

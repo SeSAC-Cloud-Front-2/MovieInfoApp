@@ -1,27 +1,35 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import Modal from './Modal';
 
-const MovieCardImg = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-`;
+function GridCards({ posterPath, movie, modalPosterPath }) {
+  //modal on/off
+  const [openModal, setOpenModal] = useState(false);
+  const handleModal = () => {
+    setOpenModal(!openModal);
+  };
 
-function GridCards({ posterpath, id, originaltitle }) {
-    return (
-        <div>
-            <a className="id" href={`/movie/${id}`}>
-                <img
-                    className="image"
-                    style={{
-                        width: '90%',
-                        height: '320px',
-                    }}
-                    src={posterpath}
-                    alt={originaltitle}
-                />
-            </a>
-        </div>
-    );
+  return (
+    <div>
+      {/* a tag -> div tag */}
+      <div className="id" onClick={handleModal}>
+        <img
+          className="image"
+          style={{
+            width: '90%',
+            height: '320px',
+          }}
+          src={posterPath}
+          alt={movie.original_title}
+        />
+        {openModal && (
+          <Modal
+            movie={movie}
+            modalPosterImg={modalPosterPath}
+            handleModal={handleModal}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
 export default GridCards;
