@@ -94,6 +94,14 @@ function Header({
         // 스크린의 가장 위로
         window.scrollTo(0, 0);
     };
+    
+    const handleDropDownClick = (e) => {
+        const id = e.target.id;
+        filter(id);
+
+        // 스크린의 가장 위로
+        window.scrollTo(0, 0);
+      };
 
     return (
         <HeaderBlock>
@@ -111,11 +119,21 @@ function Header({
                     장르
                     <DropDownContent>
                         <ul>
-                          <li id="">Action</li>
-                          <li id="">Adventure</li>
-                          <li id="">Animation</li>
-                          <li id="">Comedy</li>
-                          <li id="">Crime</li>
+                          <li id="28" onClick={handleDropDownClick}>
+                            Action
+                          </li>
+                          <li id="12" onClick={handleDropDownClick}>
+                            Adventure
+                          </li>
+                          <li id="16" onClick={handleDropDownClick}>
+                            Animation
+                          </li>
+                          <li id="35" onClick={handleDropDownClick}>
+                            Comedy
+                          </li>
+                          <li id="80" onClick={handleDropDownClick}>
+                            Crime
+                          </li>
                         </ul>
                     </DropDownContent>
                 </DropDown>
