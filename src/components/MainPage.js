@@ -12,30 +12,30 @@ const MainPageBlock = styled.div`
 `;
 
 const MovieCardBlock = styled.div`
-    width: 90%;
-    /* height: ; */
-    margin: 1rem auto;
-    .text {
-        color: white;
-    }
-    box-sizing: border-box;
+  width: 90%;
+  /* height: ; */
+  margin: 1rem auto;
+  .text {
+    color: white;
+  }
+  box-sizing: border-box;
 `;
 
 const MovieCardBody = styled.div`
-    height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0 auto;
-    width: 90%;
-    box-sizing: border-box;
-    /* 이미지가 div영역 밖으로 나가는거 방지 */
-    overflow: auto;
-    /* overflow의 스크롤바 없애고 기능은 살림*/
-    -ms-overflow-style: none;
-    ::-webkit-scrollbar {
-        display: none;
-    }
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90%;
+  box-sizing: border-box;
+  /* 이미지가 div영역 밖으로 나가는거 방지 */
+  overflow: auto;
+  /* overflow의 스크롤바 없애고 기능은 살림*/
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ButtonBlock = styled.div`
@@ -74,7 +74,7 @@ function MainPage() {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(20);
   const [number, setNumber] = useState(0);
-  const name = ['인기', '인기', '최신', '장르'];
+  const name = ["인기", "인기", "최신", "장르"];
 
   // 최초 브라우저 redering되었을 때 실행
   useEffect(() => {
@@ -91,7 +91,6 @@ function MainPage() {
           .then((response) => response.results)
       );
     }
-    console.log(movieList);
     setMovies(movieList.concat());
     setMainMovieImage(movieList[0]);
   };
@@ -105,9 +104,9 @@ function MainPage() {
   };
 
   const filter = useCallback(
-    (id) => {
-      setPage(20);    // 최대 표시값 초기화
-      const nextMovies = moviesCopy.concat();
+    (id, genre) => {
+      const nextMovies = movies.concat();
+      setPage(20); // 최대 표시값 초기화
       if (id === "0") {
         //home
         reset();
@@ -117,7 +116,7 @@ function MainPage() {
           nextMovies.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
         );
       } else if (id === "2") {
-        //new=
+        //new
         setMoviesCopy(
           nextMovies.sort((a, b) =>
             new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
@@ -125,6 +124,9 @@ function MainPage() {
         );
       } else if (id === "3") {
         //genre
+        setMoviesCopy(
+          nextMovies.filter((movie) => movie.genre_ids.includes(27))
+        );
       }
     },
     [moviesCopy]
@@ -135,9 +137,9 @@ function MainPage() {
   };
 
   // header 컨텐츠 클릭에 따른 id value setting
-    const nameChange = number => {
-        setNumber(number);
-    };
+  const nameChange = (number) => {
+    setNumber(number);
+  };
 
   return (
     <MainPageBlock>
@@ -162,6 +164,7 @@ function MainPage() {
       )}
       <MovieCardBlock>
         <h2 className="text">{`${name[number]}영화`}</h2>
+        {/* 추후 여기에 장르를 넣기 */}
         {/* Movie Grid Cards */}
         {/* <Row gutter={[16, 16]}> */}
         <MovieCardBody>
@@ -177,6 +180,14 @@ function MainPage() {
                     }
                     id={movie.id}
                     originaltitle={movie.original_title}
+                    releaseDate={movie.release_date}
+                    overView={movie.overview}
+                    voteAverage={movie.vote_average}
+                    modalPosterPath={
+                      movie.poster_path
+                        ? `${IMAGE_URL}original${movie.poster_path}`
+                        : null
+                    }
                   />
                 </div>
               ) : (
@@ -186,9 +197,14 @@ function MainPage() {
         </MovieCardBody>
         {/* </Row> */}
       </MovieCardBlock>
-      <ButtonBlock>
-        <Button onClick={onClick}>더보기</Button>
-      </ButtonBlock>
+      {/* TODO : 버튼 위치 조정 */}
+      {page < 200 ? (
+        <ButtonBlock>
+          <Button onClick={onClick}>더보기</Button>
+        </ButtonBlock>
+      ) : (
+        ""
+      )}
       <TopButton></TopButton>
     </MainPageBlock>
   );
