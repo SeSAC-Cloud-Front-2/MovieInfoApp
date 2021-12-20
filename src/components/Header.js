@@ -37,6 +37,7 @@ const NavBlock = styled.ul`
 `;
 
 function Header({
+    nameChange,
     setFilterFlags,
     filter,
     movies,
