@@ -21,7 +21,6 @@ function GridCards({ posterPath, movie, modalPosterPath }) {
     actorsList = actorsList.concat(
       await fetch(request)
         .then((response) => response.json())
-        .then((response) => response)
     );
 
     actorsList = actorsList[0].cast
@@ -58,6 +57,7 @@ function GridCards({ posterPath, movie, modalPosterPath }) {
           <Modal
             movie={movie}
             modalPosterImg={modalPosterPath}
+            actors={actors}
             handleModal={handleModal}
           />
         )}
